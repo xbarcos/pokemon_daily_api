@@ -1,12 +1,17 @@
 class DailyPokemonController < ApplicationController
   def manual_refresh
+    today = Date.today
+
     begin
+      Pokemon.where(date: today).destroy_all
       FetchDailyPokemonJob.perform_now
-      render json: { message: "Pokémon diário atualizado com sucesso." }, status: :ok
+
+      render json: { message: "Pokémon do dia substituído com sucesso." }, status: :ok
     rescue => e
-      render json: { error: "Erro ao atualizar Pokémon diário.", details: e.message }, status: :internal_server_error
+      render json: { error: "Erro ao substituir Pokémon do dia.", details: e.message }, status: :internal_server_error
     end
   end
+
   def index
     today = Date.today
     pokemon = Pokemon.find_by(date: today)
