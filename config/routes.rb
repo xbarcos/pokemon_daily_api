@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   Rails.application.routes.draw do
     get "daily_pokemon", to: "daily_pokemon#index"
-    get "/manual_refresh", to: "pokemons#manual_refresh"
+    post "/manual_refresh", to: "daily_pokemon#manual_refresh"
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
